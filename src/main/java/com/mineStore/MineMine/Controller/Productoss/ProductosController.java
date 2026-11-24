@@ -32,12 +32,8 @@ public class ProductosController {
 
     @Operation(summary = "Metodo para obtener todos los productos registrados", description = "Devuelve la lista completa de productos registrados")
     @GetMapping
-    public ResponseEntity<?> obtenerTodosProductos(){
-        List<ProductosDTO> productos = productoService.obtenerTodos();
-        if(productos.isEmpty()){
-            return new ResponseEntity<>("No hay productos en este momento ", HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(productos, HttpStatus.OK);
+    public ResponseEntity<List<ProductosDTO>> obtenerTodosProductos(){
+        return ResponseEntity.ok(productoService.obtenerTodos());
     }
 
     @Operation(summary = "Metodo para buscar un producto segun su id", description = "Devuelve un producto segun su id")

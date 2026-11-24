@@ -67,8 +67,20 @@ public class ProductoService {
         if(producto.getNombreProducto()!= null){
             productos.setNombreProducto(producto.getNombreProducto());
         }
-        if(producto.getPrecioProducto()!= null){
+        if (producto.getDescripcionProducto() != null){
+            productos.setDescripcionProducto(producto.getDescripcionProducto());
+        }
+        if (producto.getPrecioProducto() != null){
             productos.setPrecioProducto(producto.getPrecioProducto());
+        }
+        if (producto.getStockProducto() != null){
+            productos.setStockProducto(producto.getStockProducto());
+        }
+        if (producto.getCategoria() != null){
+            productos.setCategoria(producto.getCategoria());
+        }
+        if (producto.getImagen() != null){
+            productos.setImagen(producto.getImagen());
         }
         Productos actualizado = productoRepository.save(productos);
         log.info("Producto '{}' actualizado correctamente", actualizado.getNombreProducto());

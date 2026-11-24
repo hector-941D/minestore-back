@@ -40,10 +40,10 @@ public class Productos {
     private Integer stockProducto;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = true)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     @ManyToOne 
-    @JoinColumn (name = "imagen_id", nullable = true)
+    @JoinColumn (name = "imagen_id", nullable = false)
     private Imagen imagen;
 }

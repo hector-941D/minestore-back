@@ -11,7 +11,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor 
 @AllArgsConstructor 
@@ -29,5 +31,7 @@ public class Imagen {
     private String urlImagen;
 
     @OneToMany(mappedBy = "imagen")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Productos> productos;
 }

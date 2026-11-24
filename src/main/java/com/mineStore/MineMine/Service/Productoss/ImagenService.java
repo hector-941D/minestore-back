@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mineStore.MineMine.DTO.Productoss.ImagenDTO;
 import com.mineStore.MineMine.Model.Productoss.Imagen;
+import com.mineStore.MineMine.Model.Productoss.Productos;
 import com.mineStore.MineMine.Repository.Productoss.ImagenRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,6 +25,9 @@ public class ImagenService {
         ImagenDTO dto =  new ImagenDTO();
         dto.setId_imagen(imagen.getId_imagen());
         dto.setUrlImagen(imagen.getUrlImagen());
+        dto.setNombreProductos(imagen.getProductos() != null 
+            ? imagen.getProductos().stream().map(Productos::getNombreProducto).toList() 
+            : List.of());
 
         return dto;
     }
@@ -76,6 +80,12 @@ public class ImagenService {
                     log.warn("No se encontró la imagen con ID {}", id);
                     return new RuntimeException("No se pudo eliminar, La ID " + id + " no existe");
                 });
+
+            if (imagen.getProductos() != null && !imagen.getProductos().isEmpty()) {
+                log.warn("No se puede eliminar la imagen con ID {} porque tiene productos asociados", id);
+                return "No se puede eliminar la imagen porque tiene productos asociados";
+            }
+            
             imagenRepository.delete(imagen);
             log.info("imagen '{}' eliminada correctamente", imagen.getUrlImagen());
             return "La imagen con ID " + imagen.getId_imagen() + " Ha sido retirado exitosamente";

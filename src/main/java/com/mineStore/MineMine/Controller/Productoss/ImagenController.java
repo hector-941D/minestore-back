@@ -23,9 +23,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 
-@Tag(name= "Productos", description = "Operaciones CRUD para Imagenes")
+@Tag(name= "Imagenes", description = "Operaciones CRUD para Imagenes")
 @RestController 
-@RequestMapping("api/v1/imagenes")
+@RequestMapping("/api/v1/imagenes")
 public class ImagenController {
 
     @Autowired
@@ -33,12 +33,8 @@ public class ImagenController {
 
     @Operation(summary = "Metodo para obtener todas las imagenes registradas", description = "Devuelve la lista completa de imagenes registradas")
     @GetMapping
-    public ResponseEntity<?> obtenerTodasImagenes(){
-        List<ImagenDTO> imagenes = imagenService.obtenerTodos();
-        if(imagenes.isEmpty()){
-            return new ResponseEntity<>("No hay productos en este momento ", HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(imagenes, HttpStatus.OK);
+    public ResponseEntity<List<ImagenDTO>> obtenerTodasImagenes() {
+        return ResponseEntity.ok(imagenService.obtenerTodos());
     }
 
     @Operation(summary = "Metodo para buscar una imagen segun su id", description = "Devuelve una imagen segun su id")
@@ -81,6 +77,6 @@ public class ImagenController {
         if(resultado.contains("exitosamente")){
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Error, No se encontro el producto a borrar ", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resultado, HttpStatus.BAD_REQUEST);
     }
 }

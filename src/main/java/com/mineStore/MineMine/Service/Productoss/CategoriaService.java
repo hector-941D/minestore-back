@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mineStore.MineMine.DTO.Productoss.CategoriaDTO;
 import com.mineStore.MineMine.Model.Productoss.Categoria;
+import com.mineStore.MineMine.Model.Productoss.Productos;
 import com.mineStore.MineMine.Repository.Productoss.CategoriaRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,6 +25,9 @@ public class CategoriaService {
         CategoriaDTO dto = new CategoriaDTO();
         dto.setId_categoria(categoria.getId_categoria());
         dto.setNombreCategoria(categoria.getNombreCategoria());
+        dto.setNombreProductos(categoria.getProductos() != null 
+            ? categoria.getProductos().stream().map(Productos::getNombreProducto).toList() 
+            : List.of());
 
         return dto;
     }
@@ -50,7 +54,7 @@ public class CategoriaService {
         log.info("Guardando categoria '{}'", categoria.getNombreCategoria());
         Categoria categorias = categoriaRepository.save(categoria);
         log.info("categoria guardado con ID {}", categorias.getId_categoria());
-        return convertirDTO(categoria);
+        return convertirDTO(categorias);
     }
 
     public CategoriaDTO actualizarCategoria(Integer id, Categoria categoria) {
@@ -76,6 +80,12 @@ public class CategoriaService {
                     log.warn("No se encontró la categoria con ID {}", id);
                     return new RuntimeException("No se pudo eliminar, La ID " + id + " no existe");
                 });
+            
+            if (categoria.getProductos() != null && !categoria.getProductos().isEmpty()) {
+                log.warn("No se puede eliminar la categoria '{}' porque tiene productos asociados", categoria.getNombreCategoria());
+                return "No se puede eliminar la categoría porque tiene productos asociados";
+            }
+            
             categoriaRepository.delete(categoria);
             log.info("imagen '{}' eliminada correctamente", categoria.getNombreCategoria());
             return "La categoria con ID " + categoria.getNombreCategoria() + " Ha sido retirado exitosamente";
