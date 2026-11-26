@@ -1,4 +1,4 @@
-package com.mineStore.MineMine.Controller.Usuarioss;
+package com.mineStore.MineMine.Controller.Usuarioss.V1;
 
 import java.util.List;
 

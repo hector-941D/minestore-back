@@ -32,20 +32,33 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
 
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/usuarios", "/api/v1/roles", "/api/v1/regiones", "/api/v1/comunas").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**", "/api/v1/imagenes/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/regiones/**", "/api/v1/comunas/**", "/api/v1/roles/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/tipos/**", "/api/v1/metodos-pago/**", "/api/v1/metodos-envio/**").permitAll()
-
-                .requestMatchers(HttpMethod.POST, "/api/v1/ventas/**", "/api/v1/detalles/**").hasAnyRole("CLIENTE", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/v1/ventas/**", "/api/v1/detalles/**").hasAnyRole("CLIENTE", "ADMIN")
-
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/error").permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/usuarios/**", "/api/v1/roles/**", "/api/v1/regiones/**", "/api/v1/comunas/**").permitAll()
+                .requestMatchers("/api/v1/auth/**", "/api/v2/auth/**").permitAll()
 
+                .requestMatchers(HttpMethod.POST,
+                        "/api/v1/usuarios/**", "/api/v1/roles/**", "/api/v1/regiones/**", "/api/v1/comunas/**",
+                        "/api/v2/usuarios/**", "/api/v2/roles/**", "/api/v2/regiones/**", "/api/v2/comunas/**"
+                ).permitAll()
+
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/productos/**", "/api/v1/categorias/**", "/api/v1/imagenes/**",
+                        "/api/v1/regiones/**", "/api/v1/comunas/**", "/api/v1/roles/**",
+                        "/api/v1/tipos/**", "/api/v1/metodos-pago/**", "/api/v1/metodos-envio/**",
+                        "/api/v2/productos/**", "/api/v2/categorias/**", "/api/v2/imagenes/**",
+                        "/api/v2/regiones/**", "/api/v2/comunas/**", "/api/v2/roles/**",
+                        "/api/v2/tipos/**", "/api/v2/metodos-pago/**", "/api/v2/metodos-envio/**"
+                ).permitAll()
+
+                .requestMatchers(HttpMethod.POST,
+                        "/api/v1/ventas/**", "/api/v1/detalles/**",
+                        "/api/v2/ventas/**", "/api/v2/detalles/**"
+                ).hasAnyRole("CLIENTE", "ADMIN")
+
+                .requestMatchers(HttpMethod.GET,
+                        "/api/v1/ventas/**", "/api/v1/detalles/**",
+                        "/api/v2/ventas/**", "/api/v2/detalles/**"
+                ).hasAnyRole("CLIENTE", "ADMIN")
+                
                 .anyRequest().hasRole("ADMIN")
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

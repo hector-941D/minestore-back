@@ -1,4 +1,4 @@
-package com.mineStore.MineMine.Controller.Ventass;
+package com.mineStore.MineMine.Controller.Ventass.V1;
 
 import java.util.List;
 
