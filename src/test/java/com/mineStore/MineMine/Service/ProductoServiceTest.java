@@ -49,7 +49,7 @@ class ProductoServiceTest {
         productoEjemplo.setId_producto(1);
         productoEjemplo.setNombreProducto("Polera Creeper");
         productoEjemplo.setDescripcionProducto("Polera 100% algodón");
-        productoEjemplo.setPrecioProducto(15990.0);
+        productoEjemplo.setPrecioProducto(15990);
         productoEjemplo.setStockProducto(20);
         productoEjemplo.setCategoria(categoriaEjemplo);
         productoEjemplo.setImagen(imagenEjemplo);
@@ -115,7 +115,7 @@ class ProductoServiceTest {
     void actualizarProducto_CuandoExiste_ActualizaCampos() {
         Productos datosNuevos = new Productos();
         datosNuevos.setNombreProducto("Polera Enderman");
-        datosNuevos.setPrecioProducto(18990.0);
+        datosNuevos.setPrecioProducto(18990);
 
         when(productoRepository.findById(1)).thenReturn(Optional.of(productoEjemplo));
         when(productoRepository.save(any(Productos.class))).thenAnswer(inv -> inv.getArgument(0));
