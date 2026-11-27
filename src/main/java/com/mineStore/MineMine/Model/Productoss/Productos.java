@@ -34,7 +34,7 @@ public class Productos {
     private String descripcionProducto;
 
     @Column (name = "precio", nullable = false)
-    private Double precioProducto;
+    private Integer precioProducto;
 
     @Column (name = "stock", nullable = false)
     private Integer stockProducto;
